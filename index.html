@@ -3,63 +3,106 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>花月谷｜累儲獎勵</title>
+  <title>花月谷｜累斗獎勵</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
     :root{
-      --bg1:#0b0712;
-      --bg2:#120a22;
-      --card:#120a22cc;
-      --line:#ffffff14;
-      --text:#f3f0ff;
-      --muted:#b9b2d6;
-      --gold:#f4d47c;
+      --bg1:#07030f;
+      --bg2:#120726;
+
+      --glass1:#140a28cc;
+      --glass2:#0e071dcc;
+
+      --line:#ffffff18;
+      --line2:#ffffff2a;
+
+      --text:#f7f3ff;
+      --muted:#cfc7ea;
+
+      --gold:#f6d57c;
+      --gold2:#ffdca0;
+
       --purple:#a66bff;
+      --purple2:#6a35ff;
+
       --cyan:#7ee0ff;
+
+      --glowP: rgba(166,107,255,.35);
+      --glowG: rgba(246,213,124,.25);
     }
+
     body{
       min-height:100vh;
-      background:
-        radial-gradient(900px 600px at 15% 10%, #3a1b6a55 0%, transparent 60%),
-        radial-gradient(900px 600px at 85% 20%, #1b3c7a55 0%, transparent 60%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
       color:var(--text);
+      background:
+        radial-gradient(900px 600px at 12% 8%,  rgba(166,107,255,.28) 0%, transparent 60%),
+        radial-gradient(900px 600px at 86% 16%, rgba(246,213,124,.18) 0%, transparent 55%),
+        radial-gradient(1200px 700px at 45% 110%, rgba(126,224,255,.12) 0%, transparent 55%),
+        linear-gradient(180deg,var(--bg1),var(--bg2));
     }
-	.reward-name{
-  		color: #ffffff !important;     /* 道具名稱白色 */
-  		font-weight: 700;
-  		letter-spacing: .2px;
-  		text-shadow: 0 1px 10px rgba(0,0,0,.55);
-	}
 
-	.reward-id{
-  		color: rgba(255,255,255,.78) !important; /* ID 淺白 */
-  		text-shadow: 0 1px 10px rgba(0,0,0,.45);
-	}
-    .glass{
-      background:linear-gradient(180deg, #1a0f2ecc, #120a22cc);
-      border:1px solid var(--line);
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
+    /* 星光點點（很楓谷） */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.22) 50%, transparent 60%),
+        radial-gradient(1px 1px at 60% 20%, rgba(255,255,255,.18) 50%, transparent 60%),
+        radial-gradient(1.5px 1.5px at 80% 55%, rgba(255,255,255,.16) 50%, transparent 60%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,.14) 50%, transparent 60%),
+        radial-gradient(1.5px 1.5px at 55% 80%, rgba(255,255,255,.12) 50%, transparent 60%);
+      opacity:.75;
+      filter: blur(.2px);
     }
+
+    .glass{
+      background: linear-gradient(180deg, var(--glass1), var(--glass2));
+      border:1px solid var(--line);
+      box-shadow: 0 20px 70px rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* 上方淡淡紫金掃光 */
+    .glass:after{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(800px 160px at 30% 0%, rgba(166,107,255,.25), transparent 70%),
+        radial-gradient(700px 170px at 75% 0%, rgba(246,213,124,.16), transparent 70%);
+      pointer-events:none;
+    }
+
     .badge-tier{
-      background: linear-gradient(90deg, #2d1a55, #1b2a62);
+      background: linear-gradient(90deg, #251046, #122054);
       border:1px solid var(--line);
       color: var(--gold);
     }
-    .soft{
-      color: var(--muted);
-    }
+
+    .soft{ color: var(--muted); }
+    .tiny{ font-size:.85rem; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
     .search{
       background:#0f091dcc;
       border:1px solid var(--line);
       color:var(--text);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
     }
-    .search::placeholder{ color:#9b93be; }
+    .search:focus{
+      background:#0f091dcc;
+      color:var(--text);
+      border-color: rgba(166,107,255,.5);
+      box-shadow: 0 0 0 .25rem rgba(166,107,255,.18);
+    }
+    .search::placeholder{ color:#b7aedb; }
+
     .chip{
       border:1px solid var(--line);
       background:#0f091dcc;
@@ -69,53 +112,101 @@
       font-size:.9rem;
       cursor:pointer;
       user-select:none;
+      transition: transform .12s ease, border-color .2s ease, box-shadow .2s ease;
     }
-    .chip:hover{ border-color:#ffffff2a; }
-    .accordion-item{
-      background: transparent;
-      border: 0;
+    .chip:hover{
+      transform: translateY(-1px);
+      border-color: rgba(246,213,124,.45);
+      box-shadow: 0 0 0 1px rgba(246,213,124,.18), 0 0 18px rgba(166,107,255,.22);
     }
+
+    .accordion-item{ background: transparent; border: 0; }
+
     .accordion-button{
-      background: #0f091dcc;
+      background: rgba(15,9,29,.78);
       color: var(--text);
       border:1px solid var(--line);
       border-radius:16px !important;
       box-shadow:none;
+      transition: border-color .25s ease, box-shadow .25s ease, transform .12s ease;
+    }
+    .accordion-button:hover{
+      transform: translateY(-1px);
+      border-color: rgba(166,107,255,.45);
+      box-shadow: 0 0 0 1px rgba(166,107,255,.15), 0 10px 35px rgba(0,0,0,.35);
     }
     .accordion-button:not(.collapsed){
-      background: linear-gradient(90deg, #1a0f2e, #120a22);
-      border-color:#ffffff2a;
+      background: linear-gradient(90deg, rgba(26,15,46,.92), rgba(18,10,34,.92));
+      border-color: rgba(246,213,124,.35);
+      box-shadow: 0 0 0 1px rgba(246,213,124,.12), 0 0 26px rgba(166,107,255,.18);
     }
+
     .accordion-body{
-      margin-top:.6rem;
-      background: var(--card);
+      margin-top:.65rem;
+      background: rgba(18,10,34,.72);
       border:1px solid var(--line);
       border-radius:16px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
     }
+
+    /* ✅ 道具列（楓谷感：每列 hover 發光 + 金色描邊） */
     .reward-row{
       border-bottom:1px solid var(--line);
-      padding:.55rem 0;
+      padding:.65rem 0;
+      transition: background .18s ease, box-shadow .18s ease, transform .12s ease;
+      border-radius: 12px;
+    }
+    .reward-row:hover{
+      background: linear-gradient(90deg, rgba(166,107,255,.10), rgba(246,213,124,.06));
+      box-shadow:
+        0 0 0 1px rgba(246,213,124,.18),
+        0 0 22px rgba(166,107,255,.18);
+      transform: translateY(-1px);
     }
     .reward-row:last-child{ border-bottom:0; }
-    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    .tiny{ font-size:.85rem; }
-    .glow{
-      background: radial-gradient(600px 120px at 30% 0%, #a66bff30, transparent 70%);
+
+    /* ✅ 道具名稱改亮＋更楓谷（白字＋微金光） */
+    .reward-name{
+      color:#ffffff !important;
+      font-weight: 800;
+      letter-spacing:.2px;
+      text-shadow:
+        0 1px 10px rgba(0,0,0,.55),
+        0 0 16px rgba(246,213,124,.12);
+    }
+
+    /* 右側數量：金色更亮 */
+    .reward-qty{
+      color: var(--gold2);
+      font-weight: 800;
+      text-shadow: 0 0 18px rgba(246,213,124,.18);
+    }
+
+    /* 小提示：卡片內每列左右排版更像 UI */
+    .reward-left .sub{
+      color: rgba(255,255,255,.75);
+      font-size:.9rem;
+    }
+
+    hr.sep{
+      border:0; height:1px;
+      background: linear-gradient(90deg, transparent, rgba(246,213,124,.25), rgba(166,107,255,.25), transparent);
     }
   </style>
 </head>
 
 <body>
   <div class="container py-4 py-md-5">
-    <div class="glass p-4 p-md-5 glow">
-      <div class="d-flex flex-wrap align-items-end justify-content-between gap-3">
+    <div class="glass p-4 p-md-5">
+
+      <div class="d-flex flex-wrap align-items-end justify-content-between gap-3 position-relative" style="z-index:1">
         <div>
           <div class="d-inline-flex align-items-center gap-2 mb-2">
             <span class="badge badge-tier rounded-pill px-3 py-2">🌙 花月谷</span>
-            <span class="soft tiny">累儲獎勵一覽（可搜尋/可快速跳轉）</span>
+            <span class="soft tiny">累斗獎勵一覽（可搜尋 / 可快速跳轉）</span>
           </div>
-          <h1 class="h3 mb-1">累儲獎勵表</h1>
-          <div class="soft">搜尋支援：門檻、道具名稱、道具ID</div>
+          <h1 class="h3 mb-1">累斗獎勵表</h1>
+          <div class="soft">搜尋支援：門檻、道具名稱、道具ID（即使不顯示 ID 也能搜）</div>
         </div>
 
         <div class="text-end">
@@ -124,7 +215,7 @@
         </div>
       </div>
 
-      <div class="row g-3 mt-3">
+      <div class="row g-3 mt-3 position-relative" style="z-index:1">
         <div class="col-12 col-lg-6">
           <input id="q" class="form-control form-control-lg search" placeholder="🔎 搜尋：例如 40000 / 方塊 / 5062030 / 花月客" />
         </div>
@@ -140,14 +231,14 @@
         </div>
       </div>
 
-      <hr class="border-0 my-4" style="height:1px;background:var(--line)">
+      <hr class="sep my-4 position-relative" style="z-index:1">
 
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3 position-relative" style="z-index:1">
         <div class="soft">共 <span id="countAll" class="mono"></span> 個門檻｜顯示 <span id="countShown" class="mono"></span> 個</div>
         <div class="soft tiny">※ 本頁為公告用途，實際內容以遊戲內為準。</div>
       </div>
 
-      <div class="accordion" id="acc"></div>
+      <div class="accordion position-relative" style="z-index:1" id="acc"></div>
     </div>
   </div>
 
@@ -157,7 +248,6 @@
     /* =========================
        ✅ 資料區：把你那段 var 獎勵列表 = [...] 貼在這裡
        ========================= */
-
     var 獎勵列表 = [
 	{
 		獎勵需求: 2000,
@@ -219,8 +309,7 @@
 	{
 		獎勵需求: 10000,
 		獎勵內容: [
-			[1143459,	1,		"花月客 [青銅II]"],
-			[1143413,	1,		"挑戰者世界勳章"],
+			[1143459,	1,		"花月客 [青銅II]勳章 (全屬+100 | 傷害+10% | BOSS傷害+10%)"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
 			[2636422,	10,		"濃厚的靈魂艾爾達氣息"],
@@ -303,7 +392,7 @@
 	{
 		獎勵需求: 20000,
 		獎勵內容: [
-			[1143409,	1,		"花月客 [白銀]"],
+			[1143409,	1,		"花月客 [白銀] (全屬+200 | 傷害+20% | BOSS傷害+20%)"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
 			[2636422,	10,		"濃厚的靈魂艾爾達氣息"],
@@ -386,7 +475,7 @@
 	{
 		獎勵需求: 30000,
 		獎勵內容: [
-			[1143460,	1,		"花月客 [白銀II]"],
+			[1143460,	1,		"花月客 [白銀II] (全屬+300 | 傷害+30% | BOSS傷害+30%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -470,7 +559,7 @@
 	{
 		獎勵需求: 40000,
 		獎勵內容: [
-			[1143410,	1,		"花月客 [黃金]"],
+			[1143410,	1,		"花月客 [黃金] (全屬+400 | 傷害+40% | BOSS傷害+40%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -554,7 +643,7 @@
 	{
 		獎勵需求: 50000,
 		獎勵內容: [
-			[1143461,	1,		"花月客 [黃金II]"],
+			[1143461,	1,		"花月客 [黃金II] (全屬+500 | 傷害+50% | BOSS傷害+50%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -598,7 +687,7 @@
 	{
 		獎勵需求: 60000,
 		獎勵內容: [
-			[1143411,	1,		"花月客 [翡翠]"],
+			[1143411,	1,		"花月客 [翡翠] (全屬+600 | 傷害+60% | BOSS傷害+60%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -642,7 +731,7 @@
 	{
 		獎勵需求: 70000,
 		獎勵內容: [
-			[1143463,	1,		"花月客 [翡翠II]"],
+			[1143463,	1,		"花月客 [翡翠II] (全屬+700 | 傷害+70% | BOSS傷害+70%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -686,7 +775,7 @@
 	{
 		獎勵需求: 80000,
 		獎勵內容: [
-			[1143412,	1,		"花月客 [鑽石]"],
+			[1143412,	1,		"花月客 [鑽石] (全屬+800 | 傷害+80% | BOSS傷害+80%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -730,7 +819,7 @@
 	{
 		獎勵需求: 90000,
 		獎勵內容: [
-			[1143464,	1,		"花月客 [鑽石II]"],
+			[1143464,	1,		"花月客 [鑽石II] (全屬+900 | 傷害+90% | BOSS傷害+90%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -774,7 +863,7 @@
 	{
 		獎勵需求: 100000,
 		獎勵內容: [
-			[1143465,	1,		"花月客 [星辰]"],
+			[1143465,	1,		"花月客 [星辰] (全屬+000 | 傷害+100% | BOSS傷害+100%)"],
 			[2430400,	1,		"[密技]圓舞一閃"],
 			[2633634,	50,		"漆黑的BOSS碎片"],
 			[4009547,	300,	"艾爾達碎片"],
@@ -806,26 +895,27 @@
 
     // 防呆：排序（由小到大）
     獎勵列表 = (獎勵列表 || []).slice().sort((a,b)=>(a.獎勵需求||0)-(b.獎勵需求||0));
-
     countAll.textContent = 獎勵列表.length;
 
     function esc(s){
       return String(s)
         .replaceAll("&","&amp;").replaceAll("<","&lt;")
-        .replaceAll(">","&gt;").replaceAll('"',"&quot;")
+        .replaceAll(">","&gt;").replaceAll('"',"quot;")
         .replaceAll("'","&#39;");
     }
 
+    // ✅ 不顯示 ID，但仍把 ID 放進搜尋索引（在 render hay 裡）
     function makeBody(items){
       if (!items || !items.length) return `<div class="soft">（此門檻尚未填寫獎勵）</div>`;
       return items.map(([id,qty,name])=>{
         return `
-          <div class="reward-row d-flex flex-wrap align-items-center justify-content-between gap-2">
-            <div>
+          <div class="reward-row d-flex flex-wrap align-items-center justify-content-between gap-2 px-2">
+            <div class="reward-left">
               <div class="reward-name">${esc(name)}</div>
+              <div class="sub soft">（道具可用搜尋 ID：${esc(id)}）</div>
             </div>
             <div class="text-end">
-              <div class="fw-semibold" style="color:var(--gold)">x${esc(qty)}</div>
+              <div class="reward-qty">x${esc(qty)}</div>
             </div>
           </div>
         `;
@@ -840,6 +930,8 @@
       獎勵列表.forEach((it, idx)=>{
         const need = it.獎勵需求 ?? "";
         const items = it.獎勵內容 ?? [];
+
+        // 搜尋索引：門檻 + (id/qty/name)
         const hay = [
           String(need),
           ...items.flatMap(x => [String(x[0]), String(x[1]), String(x[2])])
@@ -860,7 +952,7 @@
                 data-bs-toggle="collapse" data-bs-target="#${esc(idBody)}"
                 aria-expanded="false" aria-controls="${esc(idBody)}">
                 <div class="d-flex flex-wrap align-items-center gap-3 w-100">
-                  <div class="fw-bold">累儲門檻：<span style="color:var(--cyan)" class="mono">${esc(need)}</span></div>
+                  <div class="fw-bold">累斗門檻：<span style="color:var(--cyan)" class="mono">${esc(need)}</span></div>
                   <div class="soft tiny">獎勵筆數：<span class="mono">${items.length}</span></div>
                   <div class="ms-auto soft tiny">點開查看</div>
                 </div>
@@ -884,18 +976,16 @@
     // 搜尋
     qEl.addEventListener("input", ()=>render(qEl.value));
 
-    // 快速跳門檻（也會自動打開那一格）
+    // 快速跳門檻（也會自動展開第一筆）
     document.querySelectorAll(".chip").forEach(ch=>{
       ch.addEventListener("click", ()=>{
         const need = ch.getAttribute("data-jump");
-        qEl.value = need;          // 直接用搜尋縮小範圍
+        qEl.value = need;
         render(need);
 
-        // 展開第一個結果
         const firstBtn = acc.querySelector(".accordion-button");
         if (firstBtn) firstBtn.click();
 
-        // 滾到列表
         acc.scrollIntoView({behavior:"smooth", block:"start"});
       });
     });
