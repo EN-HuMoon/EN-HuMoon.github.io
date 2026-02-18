@@ -28,6 +28,17 @@
         linear-gradient(180deg,var(--bg1),var(--bg2));
       color:var(--text);
     }
+	.reward-name{
+  		color: #ffffff !important;     /* 道具名稱白色 */
+  		font-weight: 700;
+  		letter-spacing: .2px;
+  		text-shadow: 0 1px 10px rgba(0,0,0,.55);
+	}
+
+	.reward-id{
+  		color: rgba(255,255,255,.78) !important; /* ID 淺白 */
+  		text-shadow: 0 1px 10px rgba(0,0,0,.45);
+	}
     .glass{
       background:linear-gradient(180deg, #1a0f2ecc, #120a22cc);
       border:1px solid var(--line);
@@ -811,8 +822,8 @@
         return `
           <div class="reward-row d-flex flex-wrap align-items-center justify-content-between gap-2">
             <div>
-              <div class="fw-semibold">${esc(name)}</div>
-              <div class="soft tiny mono">ID: ${esc(id)}</div>
+              <div class="reward-name">${esc(name)}</div>
+				<div class="reward-id tiny mono">ID: ${esc(id)}</div>
             </div>
             <div class="text-end">
               <div class="fw-semibold" style="color:var(--gold)">x${esc(qty)}</div>
